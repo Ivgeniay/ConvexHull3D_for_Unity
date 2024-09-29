@@ -9,7 +9,35 @@ namespace MvConvex
         public static T ArgMax<T, TKey>(this IEnumerable<T> source, Func<T, TKey> keySelector)
             where TKey : IComparable<TKey>
         {
-            return source.Aggregate((x, y) => keySelector(x).CompareTo(keySelector(y)) > 0 ? x : y);
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            using (var enumerator = source.GetEnumerator())
+            {
+                if (!enumerator.MoveNext())
+                {
+                    throw new InvalidOperationException("Sequence contains no elements");
+                }
+
+                T maxElement = enumerator.Current;
+                TKey maxKey = keySelector(maxElement);
+
+                while (enumerator.MoveNext())
+                {
+                    T currentElement = enumerator.Current;
+                    TKey currentKey = keySelector(currentElement);
+
+                    if (currentKey.CompareTo(maxKey) > 0)
+                    {
+                        maxElement = currentElement;
+                        maxKey = currentKey;
+                    }
+                }
+
+                return maxElement;
+            }
         }
     }
 }
