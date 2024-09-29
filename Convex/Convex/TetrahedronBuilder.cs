@@ -4,6 +4,9 @@ using System;
 
 namespace MvConvex
 {
+    /// <summary>
+    /// Класс для построения начального тетраэдра.
+    /// </summary>
     public class TetrahedronBuilder<TVertex, TTriangle, TFace>
     where TVertex : class, IVertex
     where TTriangle : class, ITriangle, new()

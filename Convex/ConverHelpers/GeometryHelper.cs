@@ -3,6 +3,9 @@ using System;
 
 namespace MvConvex
 {
+    /// <summary>
+    /// Вспомогательный класс для геометрических вычислений.
+    /// </summary>
     public static class GeometryHelper
     {
         public const float Epsilon = 1e-6f;

@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace MvConvex
 {
+    /// <summary>
+    /// Класс для управления гранями выпуклой оболочки.
+    /// </summary>
     public class FaceManager<TVertex, TTriangle, TFace>
         where TVertex : IVertex
         where TTriangle : class, ITriangle, new()

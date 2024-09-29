@@ -2,15 +2,20 @@
 {
     public class Edge : IEdge
     {
-        public IVertex Start { get; }
-        public IVertex End { get; }
+        public IVertex Start { get; private set; }
+        public IVertex End { get; private set; }
 
+        public Edge() { }
         public Edge(IVertex start, IVertex end)
         {
             Start = start;
             End = end;
         }
-
+        public void Initialize(IVertex start, IVertex end)
+        {
+            Start = start;
+            End = end;
+        }
         public override bool Equals(object obj)
         {
             if (obj is IEdge other)

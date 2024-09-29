@@ -32,22 +32,26 @@ using System.Collections.Generic;
 internal class TestConvexHull : MonoBehaviour
 {
     private List<VertexMono> _vertices;
-    private ConvexHull3D<VertexMono, Triangle, Face<VertexMono, Triangle>, DefaultConvexHullResult<VertexMono, Triangle, Face<VertexMono, Triangle>>> convexHull; 
-    private UnitySimpleLogger logger = new UnitySimpleLogger();
+    private ConvexHull3D<VertexMono, Triangle, Face<VertexMono, Triangle>, Edge, DefaultConvexHullResult<VertexMono, Triangle, Face<VertexMono, Triangle>, Edge>> convexHull; 
+    private UnitySimpleLogger logger = new();
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             _vertices = transform.GetComponentsInChildren<VertexMono>().ToList();
             convexHull = new(_vertices, logger);
-            DefaultConvexHullResult<VertexMono, Triangle, Face<VertexMono, Triangle>> result = convexHull.CalculateConvexHull(); 
-            GetComponent<MeshFilter>().mesh = result.CreateMeshFromResult();
+            DefaultConvexHullResult<VertexMono, Triangle, Face<VertexMono, Triangle>, Edge> result = convexHull.CalculateConvexHull();
+
+            Mesh mesh = result.CreateMeshFromResult(); 
+
+            GetComponent<MeshFilter>().mesh = mesh;
         }
     }
 }
 
 public class VertexMono : MonoBehaviour, IVertex { ...implementation... }
 public class Triangle : ITriangle {...implementation...}
+public class Edge : IEdge {...implementation...}
 public class Face<TVertex, TTriangle> : IFace<TVertex, TTriangle>
     where TVertex : IVertex
     where TTriangle : ITriangle {...implementation...}

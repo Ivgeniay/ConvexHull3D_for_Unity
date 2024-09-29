@@ -3,7 +3,10 @@ using System.Linq;
 using UnityEngine;
 
 namespace MvConvex
-{ 
+{
+    /// <summary>
+    /// Класс для расширения выпуклой оболочки.
+    /// </summary>
     public class HullExpander<TVertex, TTriangle, TFace>
         where TVertex : class, IVertex
         where TTriangle : class, ITriangle, new()

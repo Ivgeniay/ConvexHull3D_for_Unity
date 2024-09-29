@@ -3,23 +3,37 @@ using System.Linq;
 using UnityEngine;
 
 namespace MvConvex
-{  
-    public class DefaultConvexHullResult<TVertex, TTriangle, TFace> : IConvexHullResult<TVertex, TTriangle, TFace>
+{
+    /// <summary>
+    /// Реализация результата построения выпуклой оболочки по умолчанию.
+    /// </summary>
+    public class DefaultConvexHullResult<TVertex, TTriangle, TFace, TEdge> : IConvexHullResult<TVertex, TTriangle, TFace, TEdge>
     where TVertex : IVertex
     where TTriangle : ITriangle
     where TFace : IFace<TVertex, TTriangle>
+    where TEdge : IEdge
     {
         public IReadOnlyList<TVertex> HullVertices { get; private set; }
         public IReadOnlyList<TTriangle> HullTriangles { get; private set; }
         public IReadOnlyList<TFace> HullFaces { get; private set; }
+        public IReadOnlyList<TEdge> HullEdges { get; private set; }
         public IReadOnlyList<TVertex> InteriorVertices { get; private set; }
+        public IReadOnlyList<TVertex> IgnoredVertices { get; private set; }
 
-        public void SetConvexHullData(IEnumerable<TVertex> hullVertices, IEnumerable<TTriangle> hullTriangles, IEnumerable<TFace> hullFaces, IEnumerable<TVertex> interiorVertices)
+        public void SetConvexHullData(
+            IEnumerable<TVertex> hullVertices,
+            IEnumerable<TTriangle> hullTriangles,
+            IEnumerable<TFace> hullFaces,
+            IEnumerable<TEdge> hullEdges,
+            IEnumerable<TVertex> interiorVertices,
+            IEnumerable<TVertex> ignoredVertices)
         {
             HullVertices = hullVertices.ToList();
             HullTriangles = hullTriangles.ToList();
             HullFaces = hullFaces.ToList();
+            HullEdges = hullEdges.ToList();
             InteriorVertices = interiorVertices.ToList();
+            IgnoredVertices = ignoredVertices.ToList();
         }
 
         public Mesh CreateMeshFromResult()
